@@ -1,6 +1,7 @@
 import streamlit as st
 import sqlite3
 import pandas as pd
+import os
 from streamlit_autorefresh import st_autorefresh
 
 st.set_page_config(
@@ -175,9 +176,12 @@ st.markdown("""
 # ============================================================
 # DATA
 # ============================================================
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'detections.db')
+
 @st.cache_data(ttl=5)
 def load_data():
-    conn = sqlite3.connect('detections.db')
+    conn = sqlite3.connect(DB_PATH)
     df = pd.read_sql_query("SELECT * FROM detections ORDER BY timestamp DESC", conn)
     conn.close()
     return df
