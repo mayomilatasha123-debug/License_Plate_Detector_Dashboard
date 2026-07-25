@@ -270,7 +270,11 @@ with st.container(border=True):
     with img_col:
         st.markdown("**Preview**")
         if selected_row is not None:
-            st.image(selected_row['image_path'], use_container_width=True)
+            image_full_path = os.path.join(BASE_DIR, selected_row['image_path'])
+            if os.path.exists(image_full_path):
+                st.image(image_full_path, use_container_width=True)
+            else:
+                st.warning(f"Image not found: {selected_row['image_path']}")
         else:
             st.markdown('<p class="po-caption">Nothing to display</p>', unsafe_allow_html=True)
 
@@ -310,8 +314,11 @@ st.markdown("---")
 # ============================================================
 st.markdown("### Recent Detections")
 
+table_df = filtered_df.copy()
+table_df['image_path'] = table_df['image_path'].apply(lambda p: os.path.join(BASE_DIR, p))
+
 st.dataframe(
-    filtered_df,
+    table_df,
     column_config={
         "plate_confidence": st.column_config.ProgressColumn("Plate Confidence", min_value=0, max_value=1),
         "ocr_confidence": st.column_config.ProgressColumn("OCR Confidence", min_value=0, max_value=1),
