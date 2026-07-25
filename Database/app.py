@@ -214,9 +214,6 @@ df = load_data()
 
 if 'id' not in df.columns:
     df = df.reset_index().rename(columns={'index': 'id'})
-# ADD THESE TWO LINES HERE, TEMPORARILY
-st.write(df[['vehicle_confidence', 'plate_confidence', 'ocr_confidence']].dtypes)
-st.write(df[['vehicle_confidence', 'plate_confidence', 'ocr_confidence']].head())
 
 # ============================================================
 # HEADER
