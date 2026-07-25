@@ -1,4 +1,4 @@
-import streamlit as st
+  import streamlit as st
 import sqlite3
 import pandas as pd
 import os
@@ -13,7 +13,7 @@ st.set_page_config(
 st_autorefresh(interval=5000, key="datarefresh")
 
 # ============================================================
-# THEME — single navy accent, dark background, minimal chrome
+# THEME — single navy accent, dark background
 # ============================================================
 st.markdown("""
 <style>
@@ -36,7 +36,10 @@ st.markdown("""
 
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
-    header[data-testid="stHeader"] { background: transparent; }
+    header[data-testid="stHeader"] {
+        background: transparent;
+        opacity: 1 !important;
+    }
 
     /* Sidebar */
     section[data-testid="stSidebar"] {
@@ -168,6 +171,27 @@ st.markdown("""
     .po-caption {
         color: var(--text-secondary);
         font-size: 12.5px;
+    }
+
+    /* Slider value label */
+    div[data-testid="stSliderThumbValue"] {
+        background-color: transparent !important;
+        color: var(--accent-light) !important;
+        font-weight: 600;
+    }
+
+    /* Fallback for older Streamlit versions */
+    .stSlider [data-baseweb="slider"] div[role="slider"] div {
+        background-color: transparent !important;
+        color: var(--accent-light) !important;
+    }
+
+    /* Keep sidebar collapse arrow always visible */
+    button[data-testid="stSidebarCollapseButton"],
+    div[data-testid="collapsedControl"],
+    button[data-testid="baseButton-headerNoPadding"] {
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 </style>
 """, unsafe_allow_html=True)
